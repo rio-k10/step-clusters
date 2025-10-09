@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "build": "rimraf build && esbuild lambda/src/* --bundle --platform=node --target=node20 --format=cjs --outdir=build/lambda/ --minify --sourcemap",
+    "format": "prettier --write --ignore-unknown ./**/*.{ts,js,json,md,yml,yaml,tf,sh,ps1,txt}",
+    "prepare": "husky",
+    "lint": "lint-staged",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.155",
+    "esbuild": "^0.25.10",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.3",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3"
+  },
+  "lint-staged": {
+    "*.{ts,js,json,md,yml,yaml,tf,sh,ps1,txt}": [
+      "prettier --write --ignore-unknown"
+    ]
+  },
+  "dependencies": {
+    "@aws-sdk/client-sfn": "^3.906.0",
+    "@types/node": "^24.7.0",
+    "rimraf": "^6.0.1"
+  }
+}

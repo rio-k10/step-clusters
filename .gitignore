@@ -1,0 +1,19 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*.override.tf
+*.override.tf.json
+.terraformrc
+terraform.rc
+.terraform.lock.hcl
+
+# Build
+build/
+__pycache__/
+node_modules
+.env
+pnpm-lock.yaml
