@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "rimraf build && esbuild lambda/src/* --bundle --platform=node --target=node20 --format=cjs --outdir=build/lambda/ --minify --sourcemap",
+    "build": "rimraf build && rimraf infrastructure/modules/.dist && esbuild lambda/src/* --bundle --platform=node --target=node20 --format=cjs --outdir=build/lambda/ --minify --sourcemap",
     "format": "prettier --write --ignore-unknown ./**/*.{ts,js,json,md,yml,yaml,tf,sh,ps1,txt}",
     "prepare": "husky",
     "lint": "lint-staged",

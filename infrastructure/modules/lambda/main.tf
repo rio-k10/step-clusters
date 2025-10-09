@@ -34,10 +34,11 @@ resource "aws_iam_role_policy_attachment" "basic" {
 }
 
 resource "aws_iam_role_policy_attachment" "extras" {
-  for_each   = toset(var.attach_policies)
+  count      = length(var.attach_policies)
   role       = aws_iam_role.role.name
-  policy_arn = each.value
+  policy_arn = var.attach_policies[count.index]
 }
+
 
 # Explicit log group (no retention configured => destroyed with stack)
 resource "aws_cloudwatch_log_group" "lg" {
