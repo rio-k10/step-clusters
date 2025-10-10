@@ -14,6 +14,7 @@ module "lambda_worker" {
   source            = "./modules/lambda"
   name              = "${local.name_prefix}-worker"
   handler_file_path = "${var.lambda_build_dir}/worker.js"
+  handler_function_path = "worker.handler"
   runtime           = "nodejs20.x"
   memory_mb         = var.lambda_memory_mb
   timeout_s         = var.lambda_timeout_s
@@ -32,6 +33,7 @@ module "lambda_ingress" {
   source            = "./modules/lambda"
   name              = "${local.name_prefix}-ingress"
   handler_file_path = "${var.lambda_build_dir}/index.js"
+  handler_function_path = "index.handler"
   runtime           = "nodejs20.x"
   memory_mb         = var.lambda_memory_mb
   timeout_s         = var.lambda_timeout_s

@@ -4,7 +4,7 @@ ENV_FILE   ?= .env
 TF         = terraform -chdir=infrastructure
 TFVARS     = -var="aws_profile=$(AWS_PROFILE)" -var="aws_region=$(AWS_REGION)"
 
-.PHONY: check-env build synth deploy diff destroy bootstrap login format test
+.PHONY: check-env init build deploy destroy login
 
 check-env:
 	@if [ ! -f $(ENV_FILE) ]; then \
@@ -26,16 +26,23 @@ check-env:
 	@echo "Environment loaded."
 	aws sts get-caller-identity --profile $(AWS_PROFILE) >/dev/null
 
+
+init: check-env
+	pnpm install
+	$(TF) init -upgrade
+	@if ! $(TF) workspace select $(STAGE) >/dev/null 2>&1; then \
+	  $(TF) workspace new $(STAGE); \
+	fi
+
 build:
 	pnpm install
+	pnpm run format
 	pnpm run build
 	cd infrastructure
-	$(TF) init -upgrade
 	$(TF) workspace select $(STAGE)
-	cd ..
+	$(TF) init -upgrade
 
 plan: check-env build
-	pnpm run format
 	$(TF) plan $(TFVARS)
 
 apply: check-env
@@ -43,12 +50,6 @@ apply: check-env
 
 destroy: check-env
 	$(TF) destroy --auto-approve $(TFVARS)
-
-init: check-env
-	$(TF) init -upgrade
-	@if ! $(TF) workspace select $(STAGE) >/dev/null 2>&1; then \
-	  $(TF) workspace new $(STAGE); \
-	fi
 
 login:
 	aws sso login --profile $(AWS_PROFILE)

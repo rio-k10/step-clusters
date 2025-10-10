@@ -1,5 +1,6 @@
 variable "name"              { type = string }
 variable "handler_file_path" { type = string }
+variable "handler_function_path" { type = string }
 variable "runtime"           { type = string }
 variable "memory_mb"         { type = number }
 variable "timeout_s"         { type = number }
@@ -59,7 +60,7 @@ resource "aws_lambda_function" "fn" {
   filename         = data.archive_file.zip.output_path
   source_code_hash = data.archive_file.zip.output_base64sha256
   runtime          = var.runtime
-  handler          = "index.handler"
+  handler          = var.handler_function_path
   memory_size      = var.memory_mb
   timeout          = var.timeout_s
 
