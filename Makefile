@@ -27,7 +27,7 @@ check-env:
 	aws sts get-caller-identity --profile $(AWS_PROFILE) >/dev/null
 
 
-init: check-env
+install: check-env
 	pnpm install
 	$(TF) init -upgrade
 	@if ! $(TF) workspace select $(STAGE) >/dev/null 2>&1; then \

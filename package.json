@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-sfn": "^3.906.0",
+    "@aws-sdk/client-sqs": "^3.929.0",
     "@types/node": "^24.7.0",
     "rimraf": "^6.0.1"
   }
